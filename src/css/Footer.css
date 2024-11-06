@@ -1,0 +1,27 @@
+.Footer {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 0px 35px 0px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.Footer a {
+    color: #d4edda;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.Footer a:hover {
+    color: white;
+}
+  
+  .Copyright {
+    color: #fff;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  

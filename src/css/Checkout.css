@@ -1,0 +1,66 @@
+.align-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    justify-content: "space-between";
+    margin-bottom: "8px";
+}
+
+.form-box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+  
+.form-container {
+    text-align: left;
+    display: flex;               
+    justify-content: space-between; 
+    max-width: 1500px;   
+    margin: 0 auto;     
+    padding: 0 20px;    
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.flex-container .input-width {
+    margin-right: 10px;
+    width: 200px;
+}
+
+.paynow-button {
+    width: 150px; 
+  }
+
+.apply-button {
+    width: 100px; 
+    margin-left: 20px;
+}
+  
+.products-history {
+    text-align: left;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .main-content {
+    flex: 1;
+    padding: 30px;
+    text-align: center;
+    margin-top: 20px; 
+    margin-bottom: 10px;
+  }
+
+  .remove-button {
+    margin-left: 10px;
+    width: 100px;
+}

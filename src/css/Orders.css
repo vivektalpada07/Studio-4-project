@@ -1,0 +1,36 @@
+/* Orders.css */
+.main-content {
+    padding: 20px;
+  }
+  
+  .table-container {
+    margin: 20px 0;
+  }
+  
+  .table {
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  
+  .table th, .table td {
+    text-align: center;
+  }
+  
+  .modal-content {
+    padding: 20px;
+  }
+  
+  .modal-body p {
+    margin: 0;
+    padding: 5px 0;
+  }
+  
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .modal-footer .btn {
+    width: 48%;
+  }
+  

@@ -1,0 +1,11 @@
+.Return, .Description, .Refund {
+    text-align: left;
+}
+  
+.Title {
+    padding-top: 5px;
+}
+
+.policy-image {
+    width: 30%;
+}

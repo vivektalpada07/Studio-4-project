@@ -1,0 +1,151 @@
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+
+
+.protest-guerrilla-regular {
+  font-family: "Protest Guerrilla", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: white !important;
+}
+
+
+.main-content {
+  flex: 1;
+  padding: 30px;
+  text-align: center;
+  margin-top: 0px;
+}
+
+
+.Footer {
+  background-color: #28a745;
+  color: white;
+  padding: 20px 0;
+  text-align: center;
+  margin-top: auto;
+  width: 100%;
+}
+
+.Footer a {
+  color: #d4edda;
+  margin: 0 10px;
+  text-decoration: none;
+}
+
+.Footer a:hover {
+  color: white;
+}
+
+
+.product-card-body {
+  padding: 20px;
+}
+
+
+.wishlist, .add-to-cart, .buy-now-button {
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.wishlist {
+  background-color: #f0ad4e; 
+  color: white;
+}
+
+.wishlist:hover {
+  background-color: #ec971f;
+}
+
+.add-to-cart {
+  background-color: #28a745;
+  color: white;
+}
+
+.add-to-cart:hover {
+  background-color: #218838;
+}
+
+.buy-now-button {
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.buy-now-button:hover {
+  background-color: #0056b3;
+}
+
+.buy-now-button.selected {
+  background-color: #28a745; 
+  color: white;
+  border: 1px solid #28a745;
+}
+
+.buy-now-button.selected::after {
+  content: '✓';
+  margin-left: 8px;
+  font-size: 16px;
+}
+
+
+.card .wishlist,
+.card .add-to-cart {
+  margin-top: 10px;
+  width: 100%;
+  display: block;
+}
+
+.card .add-to-cart {
+  margin-top: 0;
+}
+
+
+.alert {
+  margin-top: 20px;
+  font-size: 1rem;
+}
+
+
+@media (max-width: 768px) {
+  .content {
+    padding: 15px;
+    margin-top: 60px;
+  }
+
+  .product-card-body {
+    padding: 15px;
+  }
+}
+
+
+.Return, .Description, .Refund {
+  text-align: left;
+}
+
+.Title {
+  padding-top: 5px;
+}
