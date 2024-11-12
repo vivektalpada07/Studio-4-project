@@ -1,3 +1,4 @@
+import React from 'react';
 import Footer from './Footer';
 import '../css/AboutUs.css';
 import { Container, Row } from 'react-bootstrap';
