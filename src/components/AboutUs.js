@@ -68,7 +68,7 @@ function AboutUs() {
           {image ? (
             <img src={image} alt="About Us" className="aboutus-image" />
           ) : (
-            <p>Loading Image...</p>
+            <p>Loading Image.....</p>
           )}
         </Container>
       </div>
