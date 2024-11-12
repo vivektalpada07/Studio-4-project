@@ -18,7 +18,7 @@ ENV NODE_OPTIONS=--openssl-legacy-provider
 COPY public/ /react-docker-example/public
 COPY src/ /react-docker-example/src
 
-# Expose the port the app runs on (default for React is 3000)
+# Expose the port the app runs on (default for React is 30000)
 EXPOSE 3000
 
 # Start the React application
