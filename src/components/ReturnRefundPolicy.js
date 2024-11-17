@@ -1,3 +1,4 @@
+import React from 'react';
 import Footer from './Footer';
 import '../css/ReturnRefundPolicy.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

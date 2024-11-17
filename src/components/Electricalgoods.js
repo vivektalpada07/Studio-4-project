@@ -3,6 +3,7 @@ import { db, auth } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Modal, Button, Carousel } from 'react-bootstrap';
 import ReactImageMagnify from 'react-image-magnify';
+import ReactImageZoom from 'react-image-zoom';
 import HeaderSwitcher from './HeaderSwitcher';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
