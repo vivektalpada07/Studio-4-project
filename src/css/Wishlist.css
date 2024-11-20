@@ -94,9 +94,9 @@ h2 {
 }
 
 .buy-now-button.selected {
-    background-color: #28a745;
+    background-color: Goldenrod;
     color: white;
-    border: 1px solid #28a745;
+    border: 1px solid Goldenrod;
 }
 
 .buy-now-button:hover {
@@ -123,7 +123,7 @@ h2 {
 .total-price {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #28a745;
+    color: Goldenrod;
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
@@ -136,13 +136,13 @@ h2 {
     font-weight: bold;
     border-radius: 10px;
     width: 100%;
-    background-color: #28a745;
+    background-color: Goldenrod;
     color: white;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .checkout-button:hover {
-    background-color: #218838;
+    background-color: Goldenrod;
 }
 
 .checkout-button:disabled {
