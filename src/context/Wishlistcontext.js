@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { collection, doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useUserAuth } from '../context/UserAuthContext';
+import React from 'react';
 
 const WishlistContext = createContext();
 

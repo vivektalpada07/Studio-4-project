@@ -1,5 +1,5 @@
 .Header {
-  background-color: #28a745;
+  background-color: #007bff; /* Blue */
   padding: 0px 0;
   position: fixed;
   width: 100%;
@@ -36,7 +36,7 @@
 }
 
 .Navbar .dropdown-menu {
-  background-color: #28a745;
+  background-color: #007bff; /* Blue */
   border: none;
   display: flex;
   flex-direction: column;
@@ -50,7 +50,7 @@
 
 .Navbar .dropdown-item:hover {
   background-color: rgb(249, 249, 249);
-  color: #28a745;
+  color: #007bff; /* Blue */
 }
 
 .navbar-toggler {
