@@ -1,0 +1,53 @@
+/* General Footer Styling */
+.Footer {
+  background-color: #007bff; /* Blue */
+  color: white;
+  padding: 20px 10px;
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10; 
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  font-family: 'Roboto', sans-serif; /* Change font style here */
+}
+
+/* Links within the footer */
+.Footer a {
+  color: #ffffff; /* White links for better visibility */
+  margin: 0 15px;
+  font-family: 'Roboto Slab', serif; /* Font style for links */
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease; /* Smooth transition */
+}
+
+
+
+/* Copyright Text */
+.Copyright {
+  margin-top: 10px;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 300;
+  text-align: center;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+  .Footer {
+    padding: 15px 5px;
+    font-size: 0.9rem;
+  }
+
+  .Footer a {
+    margin: 0 8px;
+    font-size: 0.9rem;
+  }
+
+  .Copyright {
+    font-size: 0.8rem;
+  }
+}

@@ -1,0 +1,42 @@
+.main-content {
+    flex: 1;
+    padding: 30px;
+    text-align: center;
+    margin-top: 0px; 
+    margin-bottom: 20px;
+  }
+
+  .login-container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+  }
+
+  .image-section {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start; 
+    
+  }
+  
+  .image-section img {
+    width: 100%; 
+    height: auto; 
+    max-width: 450px; 
+  }
+  
+  .form-section {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-top: -80px;
+  }
+  
+  .form-section .box {
+    width: 100%; 
+    max-width: 500px; 
+  }
+
+  
+  
