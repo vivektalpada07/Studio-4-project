@@ -4,3 +4,7 @@ Meeting Minutes:
 11-11-2024: 30 Minutes
 17-10-2024: 30 Minutes
 19-10-2024: 15 Minutes
+
+
+command line:
+ssh -i keyss root@95.111.216.14
