@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 // Catch-all handler to serve the React app for any route not matching an API route
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.js'));
 });
 
 // Listen on the port provided by Render via process.env.PORT or default to 3000
