@@ -7,32 +7,45 @@ import LoadingPage from './Loadingpage';
 const Reviews = () => {
   const { reviews, fetchAllReviews } = useContext(ReviewContext); // Access all reviews from context
   const { user } = useUserAuth(); // Access authenticated user (admin)
-  const [showReviews, setShowReviews] = useState(false); //show all review
-  const [loading, setLoading] = useState(true); // New state
-
+  const [showReviews, setShowReviews] = useState(false); // Show/hide reviews
+  const [loading, setLoading] = useState(true); // Loading state for fetching reviews
 
   // Fetch all reviews when the component is mounted
   useEffect(() => {
-    if (user && user.role === 'admin') {
-      fetchAllReviews();
-    }
+    const fetchReviews = async () => {
+      if (user && user.role === 'admin') {
+        try {
+          await fetchAllReviews(); // Fetch reviews from context
+        } catch (error) {
+          console.error('Error fetching reviews:', error);
+        } finally {
+          setLoading(false); // Stop loading once fetch is complete
+        }
+      } else {
+        setLoading(false); // Stop loading if user is not admin
+      }
+    };
+
+    fetchReviews();
   }, [user, fetchAllReviews]);
-// Show loading page while data is being fetched
-if (loading) {
-  return <LoadingPage />;
-}
+
+  // Show loading page while reviews are being fetched
+  if (loading) {
+    return <LoadingPage />;
+  }
+
   return (
-    <div>
+    <div className="container mt-4">
       <h2>All Product Reviews (Admin)</h2>
 
-      {/* Button to show review */}
-      <Button size='md' onClick={() => setShowReviews(!showReviews)}>
+      {/* Button to toggle reviews display */}
+      <Button size="md" onClick={() => setShowReviews(!showReviews)} className="mb-3">
         {showReviews ? 'Hide Reviews' : 'Show All Reviews'}
       </Button>
 
-      {/* Display relevant reviews fields in table format */}
+      {/* Display reviews in a table format */}
       {showReviews && reviews.length > 0 ? (
-        <Table striped bordered hover className="mt-4">
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th>Product Name</th>
@@ -44,12 +57,13 @@ if (loading) {
           <tbody>
             {reviews.map((review) => (
               <tr key={review.id}>
-                <td>{review.productName || "Unknown"}</td> 
-                <td>{review.content || "No content"}</td> 
-                <td>{review.customerName || "Anonymous"}</td> 
-                <td>{review.createdAt && review.createdAt.seconds 
-                      ? new Date(review.createdAt.seconds * 1000).toLocaleDateString() 
-                      : "N/A"}
+                <td>{review.productName || 'Unknown'}</td>
+                <td>{review.content || 'No content'}</td>
+                <td>{review.customerName || 'Anonymous'}</td>
+                <td>
+                  {review.createdAt && review.createdAt.seconds
+                    ? new Date(review.createdAt.seconds * 1000).toLocaleDateString()
+                    : 'N/A'}
                 </td>
               </tr>
             ))}

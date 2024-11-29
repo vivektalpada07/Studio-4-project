@@ -8,26 +8,29 @@ import LoadingPage from "./Loadingpage";
 
 const SellerQueries = () => {
   const [queries, setQueries] = useState([]);
+  const [loading, setLoading] = useState(true); // State to track loading
 
-  // Fetch seller queries from Firestore 
+  // Fetch seller queries from Firestore
   useEffect(() => {
     const fetchQueries = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "sellerQueries"));
         const queriesArray = querySnapshot.docs.map(doc => ({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         }));
         setQueries(queriesArray); // Store fetched queries in state
       } catch (e) {
         console.error("Error fetching queries:", e);
+      } finally {
+        setLoading(false); // Set loading to false once data is fetched
       }
     };
 
     fetchQueries();
   }, []);
 
- 
+  // Handle approving a seller query
   const handleApprove = async (query) => {
     try {
       // Update user's role to 'seller' in the users collection
@@ -58,14 +61,14 @@ const SellerQueries = () => {
       console.error("Error declining seller:", e);
     }
   };
-  const [loading, setLoading] = useState(true); // New state
 
-// Show loading page while data is being fetched
-if (loading) {
-  return <LoadingPage />;
-}
+  // Show the loading page while data is being fetched
+  if (loading) {
+    return <LoadingPage />;
+  }
+
   return (
-    <div className="main-content" style={{marginTop: -70}}>
+    <div className="main-content" style={{ marginTop: -70 }}>
       <AdminHeader />
       <h2>Seller Queries</h2>
       {queries.length > 0 ? (
@@ -119,6 +122,7 @@ if (loading) {
       ) : (
         <p>No seller queries found.</p>
       )}
+      <Footer />
     </div>
   );
 };

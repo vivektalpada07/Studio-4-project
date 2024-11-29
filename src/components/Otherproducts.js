@@ -2,39 +2,40 @@ import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Modal, Button, Carousel } from 'react-bootstrap';
-import ReactImageMagnify from 'react-image-magnify';
-import ReactImageZoom from 'react-image-zoom';
 import HeaderSwitcher from './HeaderSwitcher';
 import Footer from './Footer';
+import LoadingPage from './Loadingpage';
 import { useCartContext } from '../context/Cartcontext';
 import { useWishlistContext } from '../context/Wishlistcontext';
 import '../css/Furnitures.css';
-import LoadingPage from './Loadingpage';
+
 function OtherProducts() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
-  const [sortOption, setSortOption] = useState('default');  // New state for sorting option
+  const [sortOption, setSortOption] = useState('default');
   const { cartItems, addToCart } = useCartContext();
   const { addToWishlist } = useWishlistContext();
   const currentUser = auth.currentUser;
-  const [loading, setLoading] = useState(true); // New state
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const q = query(collection(db, "products"), where("category", "==", "other"));
+        const q = query(collection(db, 'products'), where('category', '==', 'other'));
         const querySnapshot = await getDocs(q);
-        const productsArray = querySnapshot.docs.map(doc => ({
+        const productsArray = querySnapshot.docs.map((doc) => ({
           productId: doc.id,
-          ...doc.data()
+          ...doc.data(),
         }));
         setProducts(productsArray);
         setFilteredProducts(productsArray);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false); // Stop loading once data is fetched
       }
     };
 
@@ -52,12 +53,12 @@ function OtherProducts() {
       return products; // Default sorting (no change)
     };
 
-    setFilteredProducts(sortProducts(filteredProducts));
-  }, [sortOption, filteredProducts]);
+    setFilteredProducts(sortProducts(products));
+  }, [sortOption, products]);
 
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
-    const filtered = products.filter(product =>
+    const filtered = products.filter((product) =>
       product.productName.toLowerCase().includes(value) ||
       product.productDescription.toLowerCase().includes(value) ||
       product.sellerUsername?.toLowerCase().includes(value)
@@ -79,14 +80,14 @@ function OtherProducts() {
 
   const handleAddToCart = (product) => {
     if (!currentUser) {
-      alert("Please log in to add items to the cart.");
+      alert('Please log in to add items to the cart.');
       return;
     }
 
-    const isAlreadyInCart = cartItems.some(item => item.productId === product.productId);
+    const isAlreadyInCart = cartItems.some((item) => item.productId === product.productId);
 
     if (isAlreadyInCart) {
-      alert("This product is already in your cart.");
+      alert('This product is already in your cart.');
     } else {
       addToCart({ ...product });
     }
@@ -94,7 +95,7 @@ function OtherProducts() {
 
   const handleAddToWishlist = () => {
     if (!currentUser) {
-      alert("Please log in to add items to your wishlist.");
+      alert('Please log in to add items to your wishlist.');
       return;
     }
 
@@ -102,36 +103,33 @@ function OtherProducts() {
       addToWishlist({ ...selectedProduct });
       handleClose();
     } else {
-      console.error("No product selected or product data is incomplete.");
+      console.error('No product selected or product data is incomplete.');
     }
   };
 
   const fetchSimilarProducts = async (category) => {
     try {
-      const q = query(collection(db, "products"), where("category", "==", category));
+      const q = query(collection(db, 'products'), where('category', '==', category));
       const querySnapshot = await getDocs(q);
-      const productsArray = querySnapshot.docs.map(doc => ({
+      const productsArray = querySnapshot.docs.map((doc) => ({
         productId: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
       setSimilarProducts(productsArray);
     } catch (error) {
-      console.error("Error fetching similar products:", error);
+      console.error('Error fetching similar products:', error);
     }
   };
 
-  const handleProductClick = (product) => {
-    setSelectedProduct(product);
-    fetchSimilarProducts(product.category);
-  };
-// Show loading page while data is being fetched
-if (loading) {
-  return <LoadingPage />;
-}
+  // Show loading page while data is being fetched
+  if (loading) {
+    return <LoadingPage />;
+  }
+
   return (
     <div className="wrapper">
       <HeaderSwitcher />
-      <div className="main-content" style={{marginTop: -70}}>
+      <div className="main-content" style={{ marginTop: -70 }}>
         <h2 className="text-center">Other Products</h2>
 
         {/* Search Bar */}
@@ -166,16 +164,26 @@ if (loading) {
                 <div className="card text-center">
                   <div className="card-body">
                     {product.imageUrls && product.imageUrls[0] && (
-                      <img src={product.imageUrls[0]} alt={product.productName} style={{ width: '100%', height: 'auto' }} />
+                      <img
+                        src={product.imageUrls[0]}
+                        alt={product.productName}
+                        style={{ width: '100%', height: 'auto' }}
+                      />
                     )}
                     <h5 className="card-title">{product.productName}</h5>
-                    <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
+                    <p className="card-text">
+                      <strong>Price: ${product.productPrice}</strong>
+                    </p>
                     <p className="card-text">{product.productDescription}</p>
-                    <p className="card-text">Seller Username: {product.sellerUsername || "Unknown"}</p>
+                    <p className="card-text">Seller Username: {product.sellerUsername || 'Unknown'}</p>
                     <button className="btn add-to-cart mb-2" onClick={() => handleAddToCart(product)}>
                       Add to Cart
                     </button>
-                    <button className="btn view-details" style={{ backgroundColor: '#ff8c00' }} onClick={() => handleShow(product)}>
+                    <button
+                      className="btn view-details"
+                      style={{ backgroundColor: '#ff8c00' }}
+                      onClick={() => handleShow(product)}
+                    >
                       View Details
                     </button>
                   </div>
@@ -200,21 +208,11 @@ if (loading) {
               <Carousel>
                 {selectedProduct.imageUrls.map((url, index) => (
                   <Carousel.Item key={index}>
-                    <ReactImageMagnify
-                      {...{
-                        smallImage: {
-                          alt: selectedProduct.productName,
-                          isFluidWidth: true,
-                          src: url
-                        },
-                        largeImage: {
-                          src: url,
-                          width: 1200,
-                          height: 1200
-                        },
-                        enlargedImagePosition: "beside",
-                        isHintEnabled: true
-                      }}
+                    <img
+                      className="d-block w-100"
+                      src={url}
+                      alt={selectedProduct.productName}
+                      style={{ height: '300px', objectFit: 'cover', borderRadius: '5px' }}
                     />
                   </Carousel.Item>
                 ))}
@@ -224,7 +222,7 @@ if (loading) {
               <p className="product-price">Price: ${selectedProduct.productPrice}</p>
               <p>{selectedProduct.productDescription}</p>
               <p className="product-description">{selectedProduct.productDetailedDescription}</p>
-              <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
+              <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || 'Unknown'}</p>
             </div>
 
             <div className="product-buttons">
@@ -239,7 +237,7 @@ if (loading) {
               </Button>
             </div>
 
-            {/* Display Similar Products */}
+            {/* Similar Products */}
             <div className="similar-products">
               <h5>Similar Products</h5>
               <div className="row">
@@ -259,7 +257,7 @@ if (loading) {
                         <button
                           className="btn view-details"
                           style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%', marginTop: '10px' }}
-                          onClick={() => handleProductClick(product)}
+                          onClick={() => handleShow(product)}
                         >
                           View Details
                         </button>
@@ -269,7 +267,6 @@ if (loading) {
                 ))}
               </div>
             </div>
-
           </Modal.Body>
         </Modal>
       )}
@@ -278,4 +275,3 @@ if (loading) {
 }
 
 export default OtherProducts;
-

@@ -9,7 +9,7 @@ const LoadingPage = ({ onTimeout }) => {
     const timer = setTimeout(() => {
       setVisible(false);
       if (onTimeout) onTimeout(); // Trigger callback after timeout, if provided
-    }, 3000); // 3000ms = 3 seconds
+    }, 10000); // 10000ms = 10 seconds
 
     // Clear the timer on component unmount
     return () => clearTimeout(timer);
