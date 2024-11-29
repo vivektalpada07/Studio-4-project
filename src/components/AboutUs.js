@@ -1,3 +1,4 @@
+import React from 'react';
 import Footer from './Footer';
 import '../css/AboutUs.css';
 import { Container, Row } from 'react-bootstrap';
@@ -67,7 +68,7 @@ function AboutUs() {
           {image ? (
             <img src={image} alt="About Us" className="aboutus-image" />
           ) : (
-            <p>Loading Image...</p>
+            <p>Loading Image.....</p>
           )}
         </Container>
       </div>

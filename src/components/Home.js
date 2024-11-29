@@ -83,7 +83,7 @@ function Home() {
               <br />
               homewares, electrical goods, and more,
               <br />
-              make the Eco Shop your first-stop shop!
+              make the Eco Shop your first-stop shop!!!!!
             </h3>
           </Col>
         </Row>
