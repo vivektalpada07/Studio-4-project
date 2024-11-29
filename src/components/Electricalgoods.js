@@ -3,13 +3,12 @@ import { db, auth } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Modal, Button, Carousel } from 'react-bootstrap';
 import ReactImageMagnify from 'react-image-magnify';
-import ReactImageZoom from 'react-image-zoom';
 import HeaderSwitcher from './HeaderSwitcher';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
 import { useWishlistContext } from '../context/Wishlistcontext';
 import '../css/Electricalgoods.css';
-import LoadingPage from './Loadingpage';
+import LoadingPage from './Loadingpage'; // Import LoadingPage component
 
 function Electricalgoods() {
   const [products, setProducts] = useState([]);
@@ -19,14 +18,15 @@ function Electricalgoods() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
   const [sortOrder, setSortOrder] = useState('asc'); // For sorting
+  const [loading, setLoading] = useState(true); // State for managing loading screen
   const { cartItems, addToCart } = useCartContext();
   const { addToWishlist } = useWishlistContext();
   const currentUser = auth.currentUser;
 
-  const [loading, setLoading] = useState(true); // New state
-
+  // Fetch products on component mount
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true); // Start loading
       try {
         const q = query(collection(db, "products"), where("category", "==", "electricalgoods"));
         const querySnapshot = await getDocs(q);
@@ -38,12 +38,15 @@ function Electricalgoods() {
         setFilteredProducts(productsArray);
       } catch (error) {
         console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false); // Stop loading
       }
     };
 
     fetchProducts();
   }, []);
 
+  // Sort products when sortOrder changes
   useEffect(() => {
     const sortProducts = (products) => {
       return [...products].sort((a, b) => {
@@ -121,12 +124,11 @@ function Electricalgoods() {
     setSortOrder(event.target.value);
   };
 
+  // Show LoadingPage while data is being fetched
+  if (loading) {
+    return <LoadingPage />;
+  }
 
-
-  // Show loading page while data is being fetched
-if (loading) {
-  return <LoadingPage />;
-}
   return (
     <div className="wrapper">
       <HeaderSwitcher />
@@ -194,91 +196,6 @@ if (loading) {
         )}
       </div>
       <Footer />
-
-      {/* Modal for Product Details */}
-      {selectedProduct && (
-        <Modal show={show} onHide={handleClose} scrollable={true}>
-          <Modal.Header closeButton>
-            <Modal.Title>{selectedProduct.productName}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body style={{ maxHeight: '500px', overflowY: 'auto' }}>
-            {selectedProduct.imageUrls && selectedProduct.imageUrls.length > 0 && (
-              <Carousel>
-                {selectedProduct.imageUrls.map((url, index) => (
-                  <Carousel.Item key={index}>
-                    <ReactImageMagnify
-                      {...{
-                        smallImage: {
-                          alt: selectedProduct.productName,
-                          isFluidWidth: true,
-                          src: url
-                        },
-                        largeImage: {
-                          src: url,
-                          width: 1200,
-                          height: 1200
-                        },
-                        enlargedImagePosition: "beside",
-                        isHintEnabled: true
-                      }}
-                    />
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-            )}
-            <div className="product-details">
-              <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
-              <p>{selectedProduct.productDescription}</p>
-              <p className="product-description">{selectedProduct.productDetailedDescription}</p>
-              <p className="product-price">Price: ${selectedProduct.productPrice}</p>
-            </div>
-
-            {/* Buttons */}
-            <div className="product-buttons">
-              <Button variant="warning" className="mb-3" onClick={handleAddToWishlist}>
-                Add to Wishlist
-              </Button>
-              <Button variant="primary" className="mb-3" onClick={() => handleAddToCart(selectedProduct)}>
-                Add to Cart
-              </Button>
-              <Button variant="secondary" className="mb-3" onClick={handleClose}>
-                Close
-              </Button>
-            </div>
-
-            {/* Display Similar Products */}
-            <div className="similar-products">
-              <h5>Similar Products</h5>
-              <div className="row">
-                {similarProducts.map((product) => (
-                  <div className="col-md-4" key={product.productId}>
-                    <div className="card text-center">
-                      {product.imageUrls && product.imageUrls[0] && (
-                        <img
-                          src={product.imageUrls[0]}
-                          alt={product.productName}
-                          style={{ width: '100%', height: 'auto' }}
-                        />
-                      )}
-                      <div className="card-body">
-                        <h6>{product.productName}</h6>
-                        <p>Price: ${product.productPrice}</p>
-                        <button 
-                          className="btn view-details"
-                          style={{ backgroundColor: '#ff8c00' }}
-                          onClick={() => handleShow(product)}
-                        >
-                          View Details
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </Modal.Body>
-        </Modal>
-      )}
     </div>
   );
 }

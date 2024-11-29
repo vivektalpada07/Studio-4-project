@@ -6,26 +6,29 @@ import HeaderSwitcher from "./HeaderSwitcher";
 import CheckoutService from "../context/CheckoutServices"; // Import the CheckoutService
 import "../css/Orders.css"; // Import the CSS file
 import LoadingPage from "./Loadingpage";
+
 const Orders = () => {
   const { orders, updateOrderStatus } = useProductcontext();
   const { user } = useUserAuth();
   const [sellerOrders, setSellerOrders] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(true); // New state
-
+  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     if (user && user.uid) {
       const filteredOrders = orders
-        .filter((order) => order.status !== 'complete') // Exclude completed orders
+        .filter((order) => order.status !== "complete") // Exclude completed orders
         .map((order) => ({
           ...order,
-          items: order.items ? order.items.filter((item) => item.sellerId === user.uid) : []
+          items: order.items
+            ? order.items.filter((item) => item.sellerId === user.uid)
+            : [],
         }))
         .filter((order) => order.items.length > 0);
 
       setSellerOrders(filteredOrders);
+      setLoading(false); // Stop loading once data is processed
     }
   }, [orders, user]);
 
@@ -36,14 +39,22 @@ const Orders = () => {
   const handleProductClick = async (product) => {
     try {
       const querySnapshot = await CheckoutService.getAllCheckouts();
-      const checkouts = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const checkouts = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
 
-      const matchedCheckout = checkouts.find(checkout =>
-        checkout.items.some(item => item.productName === product.productName && item.sellerId === user.uid)
+      const matchedCheckout = checkouts.find((checkout) =>
+        checkout.items.some(
+          (item) =>
+            item.productName === product.productName && item.sellerId === user.uid
+        )
       );
 
       if (matchedCheckout) {
-        const itemDetails = matchedCheckout.items.find(item => item.productName === product.productName);
+        const itemDetails = matchedCheckout.items.find(
+          (item) => item.productName === product.productName
+        );
         const productPrice = itemDetails.productPrice || 0;
         const serverFee = productPrice * 0.15; // Calculate server fee (15% of price)
         const profit = productPrice * 0.85; // Calculate profit (85% of price)
@@ -57,7 +68,7 @@ const Orders = () => {
           region: matchedCheckout.region || "N/A",
           zipCode: matchedCheckout.zipCode || "N/A",
           city: matchedCheckout.city || "N/A",
-          country: matchedCheckout.country || "N/A"
+          country: matchedCheckout.country || "N/A",
         });
         setShowModal(true);
       }
@@ -65,13 +76,14 @@ const Orders = () => {
       console.error("Error fetching checkouts: ", error);
     }
   };
+
   // Show loading page while data is being fetched
-if (loading) {
-  return <LoadingPage />;
-}
+  if (loading) {
+    return <LoadingPage />;
+  }
 
   return (
-    <div className="main-content" style={{marginTop: -70}}>
+    <div className="main-content" style={{ marginTop: -70 }}>
       <HeaderSwitcher />
       <h2>My Orders</h2>
       <div className="table-container">
@@ -90,7 +102,10 @@ if (loading) {
               {sellerOrders.map((order, index) =>
                 order.items.map((item, itemIndex) => (
                   <tr key={itemIndex}>
-                    <td onClick={() => handleProductClick(item)} style={{ cursor: 'pointer' }}>
+                    <td
+                      onClick={() => handleProductClick(item)}
+                      style={{ cursor: "pointer" }}
+                    >
                       {item.productName}
                     </td>
                     <td>{item.productPrice.toFixed(2)}</td>
@@ -125,17 +140,49 @@ if (loading) {
         <Modal.Body className="modal-content">
           {selectedProduct ? (
             <>
-              <p><strong>Name:</strong> {selectedProduct.productName || "N/A"}</p>
-              <p><strong>Description:</strong> {selectedProduct.productDescription || "N/A"}</p>
-              <p><strong>Price:</strong> {selectedProduct.productPrice ? selectedProduct.productPrice.toFixed(2) : "N/A"}</p>
-              <p><strong>Payment ID:</strong> {selectedProduct.paymentId || "N/A"}</p>
-              <p><strong>Server Fee:</strong> {selectedProduct.serverFee ? selectedProduct.serverFee.toFixed(2) : "N/A"}</p>
-              <p><strong>Profit:</strong> {selectedProduct.profit ? selectedProduct.profit.toFixed(2) : "N/A"}</p>
-              <p><strong>Address:</strong> {selectedProduct.address}</p>
-              <p><strong>Region:</strong> {selectedProduct.region}</p>
-              <p><strong>Zip Code:</strong> {selectedProduct.zipCode}</p>
-              <p><strong>City:</strong> {selectedProduct.city}</p>
-              <p><strong>Country:</strong> {selectedProduct.country}</p>
+              <p>
+                <strong>Name:</strong> {selectedProduct.productName || "N/A"}
+              </p>
+              <p>
+                <strong>Description:</strong>{" "}
+                {selectedProduct.productDescription || "N/A"}
+              </p>
+              <p>
+                <strong>Price:</strong>{" "}
+                {selectedProduct.productPrice
+                  ? selectedProduct.productPrice.toFixed(2)
+                  : "N/A"}
+              </p>
+              <p>
+                <strong>Payment ID:</strong> {selectedProduct.paymentId || "N/A"}
+              </p>
+              <p>
+                <strong>Server Fee:</strong>{" "}
+                {selectedProduct.serverFee
+                  ? selectedProduct.serverFee.toFixed(2)
+                  : "N/A"}
+              </p>
+              <p>
+                <strong>Profit:</strong>{" "}
+                {selectedProduct.profit
+                  ? selectedProduct.profit.toFixed(2)
+                  : "N/A"}
+              </p>
+              <p>
+                <strong>Address:</strong> {selectedProduct.address}
+              </p>
+              <p>
+                <strong>Region:</strong> {selectedProduct.region}
+              </p>
+              <p>
+                <strong>Zip Code:</strong> {selectedProduct.zipCode}
+              </p>
+              <p>
+                <strong>City:</strong> {selectedProduct.city}
+              </p>
+              <p>
+                <strong>Country:</strong> {selectedProduct.country}
+              </p>
             </>
           ) : (
             <p>No product details available.</p>
