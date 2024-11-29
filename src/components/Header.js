@@ -5,8 +5,10 @@
   import NavDropdown from 'react-bootstrap/NavDropdown';
   import Button from 'react-bootstrap/Button';
   import '../css/Header.css';  // Ensure this file includes your CSS class
+  import LoadingPage from './Loadingpage';
 
   function Header() {
+    
     return (
       <Navbar expand="lg" className='Header' >
         <Container className='Navbar'>

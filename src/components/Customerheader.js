@@ -7,6 +7,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext';
 import '../css/Header.css';
+import LoadingPage from './Loadingpage';
 
 function CustomerHeader() {
   // Extract logOut function from the user authentication context
@@ -26,6 +27,8 @@ function CustomerHeader() {
       console.log("Failed to logout: ", error);
     }
   };
+
+
 
   return (
     <Navbar expand="lg" className='Header'>

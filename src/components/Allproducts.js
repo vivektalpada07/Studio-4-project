@@ -6,6 +6,7 @@ import ReactImageMagnify from 'react-image-magnify';
 import ReactImageZoom from 'react-image-zoom';
 import HeaderSwitcher from './HeaderSwitcher';
 import Footer from './Footer';
+import LoadingPage from './Loadingpage';
 import { useCartContext } from '../context/Cartcontext';
 import { useWishlistContext } from '../context/Wishlistcontext';
 import '../css/Furnitures.css';  // Reusing the same CSS for consistent styling
@@ -21,6 +22,7 @@ function AllProducts() {
   const { cartItems, addToCart } = useCartContext();
   const { addToWishlist } = useWishlistContext();
   const currentUser = auth.currentUser;
+  
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -117,7 +119,12 @@ function AllProducts() {
       console.error("Error fetching similar products:", error);
     }
   };
+  // Show loading page while data is being fetched
+  const [loading, setLoading] = useState(true); // New state
 
+  if (loading) {
+    return <LoadingPage />;
+  }
   return (
     <div className="wrapper">
       <HeaderSwitcher />

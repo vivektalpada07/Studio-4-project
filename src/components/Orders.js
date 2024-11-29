@@ -5,13 +5,15 @@ import { useUserAuth } from "../context/UserAuthContext";
 import HeaderSwitcher from "./HeaderSwitcher";
 import CheckoutService from "../context/CheckoutServices"; // Import the CheckoutService
 import "../css/Orders.css"; // Import the CSS file
-
+import LoadingPage from "./Loadingpage";
 const Orders = () => {
   const { orders, updateOrderStatus } = useProductcontext();
   const { user } = useUserAuth();
   const [sellerOrders, setSellerOrders] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true); // New state
+
 
   useEffect(() => {
     if (user && user.uid) {
@@ -63,6 +65,10 @@ const Orders = () => {
       console.error("Error fetching checkouts: ", error);
     }
   };
+  // Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
 
   return (
     <div className="main-content" style={{marginTop: -70}}>

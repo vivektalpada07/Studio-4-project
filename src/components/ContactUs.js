@@ -3,7 +3,7 @@ import { Form, Alert, InputGroup, Button } from "react-bootstrap";
 import Contactusservice from "../context/Contactusservice"; // Service to handle contact form submissions
 import Footer from "./Footer";
 import HeaderSwitcher from "./HeaderSwitcher";
-
+import LoadingPage from "./Loadingpage";
 function ContactUs() {
   // State variables to manage form inputs and feedback messages
   const [name, setName] = useState("");
@@ -11,6 +11,8 @@ function ContactUs() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [feedback, setFeedback] = useState({ error: false, msg: "" });
+  const [loading, setLoading] = useState(true); // New state
+
 
   // Handles form submission
   const handleSubmit = async (e) => {
@@ -46,7 +48,10 @@ function ContactUs() {
     setSubject("");
     setMessage("");
   };
-
+// Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
   return (
     <div className="main-content" style={{marginTop: -110}}>
       <HeaderSwitcher />

@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext'; // Import authentication context for handling user actions
 import '../css/Header.css'; // Import custom CSS for header styling
@@ -21,6 +22,8 @@ function AdminHeader() {
       console.log("Failed to logout: ", error); // Log any errors that occur during the logout process
     }
   };
+  // Show loading page while data is being fetched
+
 
   return (
     <Navbar expand="lg" className='Header'> {/* Navbar expands on large screens, className applied for custom styles */}

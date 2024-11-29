@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -11,12 +11,23 @@ import Footer from './Footer';
 import '../css/Wishlist.css';
 import { useNavigate } from 'react-router-dom';
 import HeaderSwitcher from './HeaderSwitcher';
+import LoadingPage from './Loadingpage';
 
 function Wishlist() {
   const { wishlist, removeFromWishlist } = useWishlistContext();
   const { cartItems, addToCart } = useCartContext(); 
   const { user: currentUser } = useUserAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true); // New state for loading
+
+  // Simulating data fetch
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setLoading(false); // Simulate data loading completion
+    }, 2000); // Simulated delay of 2 seconds
+
+    return () => clearTimeout(timeout); // Cleanup timeout on unmount
+  }, []);
 
   // Calculate total price of items in the wishlist
   const totalPrice = wishlist.reduce((total, item) => total + item.productPrice, 0);
@@ -37,10 +48,15 @@ function Wishlist() {
     }
   };
 
+  // Show loading page while data is being fetched
+  if (loading) {
+    return <LoadingPage />;
+  }
+
   if (!currentUser) {
     return (
       <div className="wrapper">
-        <HeaderSwitcher/>
+        <HeaderSwitcher />
         <div className="content">
           <Container>
             <p className="text-center">You need to log in to view your wishlist.</p>
@@ -56,8 +72,8 @@ function Wishlist() {
 
   return (
     <div className="wrapper">
-      <HeaderSwitcher/>
-      <div className="main-content" style={{marginTop: -50}}>
+      <HeaderSwitcher />
+      <div className="main-content" style={{ marginTop: -50 }}>
         <Container>
           <h2 className="text-center mb-4">Your Wishlist</h2>
           <Row className="justify-content-center">

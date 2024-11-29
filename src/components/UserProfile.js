@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useUserAuth } from "../context/UserAuthContext";
 import FBDataService from "../context/FBService";
 import { Button, Form, Modal, Alert } from "react-bootstrap";
+import LoadingPage from "./Loadingpage";
 
 const UserProfile = () => {
   const { user } = useUserAuth();
   const [userProfile, setUserProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // State for loading
   const [showModal, setShowModal] = useState(false);
   const [updatedProfile, setUpdatedProfile] = useState({});
   const [error, setError] = useState("");
@@ -30,7 +31,7 @@ const UserProfile = () => {
       } catch (err) {
         setError("Error fetching user data.");
       } finally {
-        setLoading(false);
+        setLoading(false); // Set loading to false after data is fetched
       }
     };
 
@@ -60,8 +61,9 @@ const UserProfile = () => {
     }
   };
 
+  // Show loading page while data is being fetched
   if (loading) {
-    return <div>Loading profile...</div>;
+    return <LoadingPage />;
   }
 
   return (
@@ -69,12 +71,18 @@ const UserProfile = () => {
       {error && <Alert variant="danger">{error}</Alert>}
       {userProfile ? (
         <div>
-          <h2><strong>User Profile</strong></h2>
+          <h2>
+            <strong>User Profile</strong>
+          </h2>
           <p>Name: {userProfile.name}</p>
           <p>Email: {userProfile.email}</p>
           <p>Mobile: {userProfile.mobile}</p>
           <p>Username: {userProfile.username}</p>
-          <Button variant="success" onClick={handleEdit} style={{ width: '150px' }}>
+          <Button
+            variant="success"
+            onClick={handleEdit}
+            style={{ width: "150px" }}
+          >
             Edit Profile
           </Button>
 

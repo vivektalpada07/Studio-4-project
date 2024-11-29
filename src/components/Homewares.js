@@ -9,6 +9,7 @@ import { useCartContext } from '../context/Cartcontext';
 import { useWishlistContext } from '../context/Wishlistcontext';
 import '../css/Homewares.css';  // Add your CSS file here
 import HeaderSwitcher from './HeaderSwitcher';
+import LoadingPage from './Loadingpage';
 
 function Homewares() {
   const [products, setProducts] = useState([]);
@@ -21,6 +22,7 @@ function Homewares() {
   const { cartItems, addToCart } = useCartContext();  
   const { addToWishlist } = useWishlistContext();  
   const currentUser = auth.currentUser;
+  const [loading, setLoading] = useState(true); // New state
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -125,7 +127,10 @@ function Homewares() {
     setSelectedProduct(product);  // Update modal with the clicked product details
     fetchSimilarProducts(product.category);  // Update similar products as well
   };
-
+// Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
   return (
     <div className="wrapper">
       <HeaderSwitcher/>

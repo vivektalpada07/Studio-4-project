@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { ReviewContext } from '../context/ReviewContext';
 import { useUserAuth } from '../context/UserAuthContext';
+import LoadingPage from './Loadingpage';
 
 const Reviews = () => {
   const { reviews, fetchAllReviews } = useContext(ReviewContext); // Access all reviews from context
   const { user } = useUserAuth(); // Access authenticated user (admin)
   const [showReviews, setShowReviews] = useState(false); //show all review
+  const [loading, setLoading] = useState(true); // New state
+
 
   // Fetch all reviews when the component is mounted
   useEffect(() => {
@@ -14,7 +17,10 @@ const Reviews = () => {
       fetchAllReviews();
     }
   }, [user, fetchAllReviews]);
-
+// Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
   return (
     <div>
       <h2>All Product Reviews (Admin)</h2>

@@ -3,6 +3,7 @@ import { db, auth } from '../firebase'; // Ensure Firebase Auth is imported
 import { collection, addDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import '../css/Header.css';
+import LoadingPage from './Loadingpage';
 import '../css/Addproduct.css';
 import HeaderSwitcher from './HeaderSwitcher';
 
@@ -38,7 +39,13 @@ function Addproducts() {
     const uploadPromises = images.map((image) => {
       const storageRef = ref(storage, `images/${productName}/${image.name}`); // Save images in a sub-folder under the product name
       const uploadTask = uploadBytesResumable(storageRef, image); // Upload image
+      const [loading, setLoading] = useState(true); // New state
 
+
+      // Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
       return new Promise((resolve, reject) => {
         uploadTask.on(
           'state_changed',

@@ -6,9 +6,11 @@ import { Container, Row } from 'react-bootstrap';
 import HeaderSwitcher from './HeaderSwitcher';
 import { useEffect, useState } from 'react';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
+import LoadingPage from './Loadingpage';
 
 function ReturnAndRefundPolicy() {
   const [policyImage, setPolicyImage] = useState("");
+  const [loading, setLoading] = useState(true); // New state
 
   
   const storage = getStorage();
@@ -32,7 +34,10 @@ function ReturnAndRefundPolicy() {
 
     fetchImage();
   }, []);
-
+// Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
   return (
     <div className='wrapper'>
       <HeaderSwitcher/>
