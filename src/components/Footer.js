@@ -4,7 +4,10 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import '../css/Footer.css'; // Ensure this file includes necessary styles
 
+
 function Footer() {
+    // Show loading page while data is being fetched
+
     return (
         <Navbar data-bs-theme='dark' style={{ height: '80px' }} className='Footer'>
             <Container className="d-flex flex-column align-items-center">

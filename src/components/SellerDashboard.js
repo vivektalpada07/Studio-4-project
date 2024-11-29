@@ -5,11 +5,13 @@ import { useUserAuth } from '../context/UserAuthContext';
 import FBDataService from '../context/FBService';
 import CheckoutService from '../context/CheckoutServices'; 
 import '../css/SellerDashboard.css';
-
+import LoadingPage from './Loadingpage';
 function SellerDashboard() {
     const { user } = useUserAuth(); 
     const [username, setUsername] = useState('');
     const [totalEarnings, setTotalEarnings] = useState(0); // State to store total earnings
+    const [loading, setLoading] = useState(true); // New state
+
 
     useEffect(() => {
         if (user && user.uid) {
@@ -53,7 +55,10 @@ function SellerDashboard() {
             fetchEarningsData(); 
         }
     }, [user]);
-
+// Show loading page while data is being fetched
+if (loading) {
+    return <LoadingPage />;
+  }
     return (
         <div className="main-content">
             <SellerHeader />

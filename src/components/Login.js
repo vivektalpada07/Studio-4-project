@@ -9,6 +9,7 @@ import Footer from "./Footer";
 import FBDataService from "../context/FBService"; // Service to fetch user data from Firebase
 import '../css/Login.css'; // Custom CSS for login page
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import LoadingPage from "./Loadingpage";
 
 const Login = () => {
   const [email, setEmail] = useState(""); // State for email input
@@ -17,6 +18,8 @@ const Login = () => {
   const [image, setImage] = useState(""); // State for storing the login image URL
   const { logIn, googleSignIn } = useUserAuth(); // Destructure login functions from context
   const navigate = useNavigate(); // Hook for navigation
+  const [loading, setLoading] = useState(true); // New state
+
 
   // Initialize Firebase Storage to get images
   const storage = getStorage();
@@ -87,6 +90,10 @@ const Login = () => {
       setError(error.message); // Display error message if Google sign-in fails
     }
   };
+  // Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
 
   return (
     <>

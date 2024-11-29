@@ -6,12 +6,14 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useUserAuth } from "../context/UserAuthContext";
 import Footer from "./Footer";
 import HeaderSwitcher from "./HeaderSwitcher";
-
+import LoadingPage from "./Loadingpage";
 const BeSeller = () => {
   // State variables for handling form inputs
   const [reason, setReason] = useState("");  // Reason for wanting to be a seller
   const [image, setImage] = useState(null);  // Selected image file
   const { user } = useUserAuth();  // Access current authenticated user
+  const [loading, setLoading] = useState(true); // New state
+
 
   // Handle image file selection
   const handleImageChange = (e) => {
@@ -52,6 +54,10 @@ const BeSeller = () => {
     }
   };
 
+  // Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
   return (
     <div className="main-content" style={{marginTop: -70}}>
       <HeaderSwitcher />  {/* Header component that switches based on user role */}

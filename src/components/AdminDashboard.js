@@ -3,6 +3,7 @@ import AdminHeader from './Adminheader';
 import Footer from './Footer';
 import UserProfile from './UserProfile';
 import '../css/AdminDashboard.css';
+import LoadingPage from './Loadingpage';
 import CheckoutService from '../context/CheckoutServices'; // Service for fetching checkout data from Firestore
 import FBDataService from '../context/FBService'; // Service for fetching user data from Firestore
 import { useUserAuth } from '../context/UserAuthContext'; // Hook for getting the currently logged-in user
@@ -12,7 +13,9 @@ function AdminDashboard() {
     const [totalServerFees, setTotalServerFees] = useState(0); // State to store the total server fees
     const [totalProductsSold, setTotalProductsSold] = useState(0); // State to store the total number of products sold
     const { user } = useUserAuth(); // Access the current authenticated user using the custom hook
-    const [userName, setUserName] = useState(''); // State to store the current user's name
+    const [userName, setUserName] = useState(''); 
+    const [loading, setLoading] = useState(true); // New state
+// State to store the current user's name
 
     useEffect(() => {
         // Function to fetch checkout data and calculate total server fees and products sold
@@ -65,7 +68,10 @@ function AdminDashboard() {
         fetchCheckoutData();
         fetchUserName();
     }, [user]); // Re-run when the user state changes (e.g., when the user logs in/out)
-
+// Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
     return (
       <div className='main-content' style={{marginTop: -40}}>
         <AdminHeader /> {/* Renders the admin dashboard header */}

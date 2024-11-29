@@ -6,6 +6,7 @@ import { db } from "../firebase";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore"; // Import Firestore methods
 import CustomerHeader from "./Customerheader"; // Import header component for customer
 import HeaderSwitcher from "./HeaderSwitcher"; // Import component to switch headers
+import LoadingPage from "./Loadingpage";
 
 const CustomerOrders = () => {
   // Access the orders and user data from context
@@ -17,6 +18,8 @@ const CustomerOrders = () => {
   const [selectedProductForReview, setSelectedProductForReview] = useState(null); // Selected product to review
   const [showReviewModal, setShowReviewModal] = useState(false); // Control visibility of review modal
   const [reviewContent, setReviewContent] = useState(""); // Content of the review
+  const [loading, setLoading] = useState(true); // New state
+
 
   // Fetch orders from Firestore when the component mounts or user changes
   useEffect(() => {
@@ -89,6 +92,10 @@ const CustomerOrders = () => {
     setSelectedProductForReview(item); // Set the product for review
     setShowReviewModal(true); // Show the review modal
   };
+  // Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
 
   return (
     <div className="main-content" style={{ marginTop: -70}}>

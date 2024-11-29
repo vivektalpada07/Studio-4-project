@@ -1,0 +1,40 @@
+/* Full-page loading wrapper */
+.loading-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa, #d4d9df);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Spinner animation */
+  .loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgba(0, 0, 0, 0.2);
+    border-top: 6px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Spinner animation keyframes */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Loading text */
+  .loading-text {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  }
+  

@@ -4,6 +4,7 @@ import { collection, getDocs, deleteDoc, doc, updateDoc } from "firebase/firesto
 import { db } from "../firebase";
 import AdminHeader from "./Adminheader";
 import Footer from "./Footer";
+import LoadingPage from "./Loadingpage";
 
 const SellerQueries = () => {
   const [queries, setQueries] = useState([]);
@@ -57,7 +58,12 @@ const SellerQueries = () => {
       console.error("Error declining seller:", e);
     }
   };
+  const [loading, setLoading] = useState(true); // New state
 
+// Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
   return (
     <div className="main-content" style={{marginTop: -70}}>
       <AdminHeader />

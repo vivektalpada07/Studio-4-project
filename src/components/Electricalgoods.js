@@ -9,6 +9,7 @@ import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
 import { useWishlistContext } from '../context/Wishlistcontext';
 import '../css/Electricalgoods.css';
+import LoadingPage from './Loadingpage';
 
 function Electricalgoods() {
   const [products, setProducts] = useState([]);
@@ -21,6 +22,8 @@ function Electricalgoods() {
   const { cartItems, addToCart } = useCartContext();
   const { addToWishlist } = useWishlistContext();
   const currentUser = auth.currentUser;
+
+  const [loading, setLoading] = useState(true); // New state
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -118,6 +121,12 @@ function Electricalgoods() {
     setSortOrder(event.target.value);
   };
 
+
+
+  // Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
   return (
     <div className="wrapper">
       <HeaderSwitcher />

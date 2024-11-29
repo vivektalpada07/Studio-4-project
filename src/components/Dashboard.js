@@ -5,7 +5,7 @@ import CustomerHeader from './Customerheader'; // Import the CustomerHeader comp
 import { useUserAuth } from '../context/UserAuthContext'; // Import user authentication context
 import FBDataService from '../context/FBService'; // Import service for fetching data from Firestore
 import '../css/Dashboard.css'; // Import CSS for dashboard styling
-
+import LoadingPage from './Loadingpage';
 function Dashboard() {
     const { user } = useUserAuth(); // Access the currently authenticated user from context
     const [userName, setUserName] = useState(''); // State to hold the user's name
@@ -31,6 +31,8 @@ function Dashboard() {
 
         fetchUserName(); // Call the function to fetch the user's name
     }, [user]); // Re-run this effect if the user changes
+
+    // Show loading page while data is being fetched
 
     return (
         <div className='main-content'>

@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import LoadingPage from './Loadingpage';
 import { useCartContext } from '../context/Cartcontext';
 import { useUserAuth } from '../context/UserAuthContext'; 
 import Footer from './Footer';
@@ -22,6 +23,7 @@ function Cart() {
   const [totalPrice, setTotalPrice] = useState(0);
   // Hook to navigate programmatically
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true); // New state
 
   useEffect(() => {
     // Calculate total price of selected products
@@ -81,7 +83,10 @@ function Cart() {
       </div>
     );
   }
-
+// Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
   return (
     <div className="wrapper">
       <HeaderSwitcher />

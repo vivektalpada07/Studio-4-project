@@ -3,12 +3,14 @@ import FBDataService from "../context/FBService";
 import { Table, Form, InputGroup, FormControl, Button } from "react-bootstrap";
 import AdminHeader from "./Adminheader";
 import Footer from "./Footer";
-
+import LoadingPage from "./Loadingpage";
 const ManageUsers = () => {
   // State to hold lists of customers and sellers, and the search query
   const [customers, setCustomers] = useState([]);
   const [sellers, setSellers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true); // New state
+
 
   // Fetch users from Firebase and separate them into customers and sellers
   useEffect(() => {
@@ -69,6 +71,10 @@ const ManageUsers = () => {
   const filteredSellers = sellers.filter((user) =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  // Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
 
   return (
     <div className="main-content" style={{marginTop: -70}}>

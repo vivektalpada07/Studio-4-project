@@ -6,6 +6,7 @@ import CheckoutService from "../context/CheckoutServices";
 import HeaderSwitcher from "./HeaderSwitcher";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import LoadingPage from "./Loadingpage";
 import { getAuth } from "firebase/auth"; //This will import the authentication from firebase
 
 function Checkout() {
@@ -25,6 +26,8 @@ function Checkout() {
     const [showModal, setShowModal] = useState(false);
     const [showErrorModal, setShowErrorModal] = useState(false);
     const [missingFields, setMissingFields] = useState([]);
+    const [loading, setLoading] = useState(true); // New state
+
     
     // Inside the Checkout function
     const location = useLocation();
@@ -160,6 +163,10 @@ function Checkout() {
         setZipCode("");
         setCardNumber("");
     };
+    // Show loading page while data is being fetched
+if (loading) {
+    return <LoadingPage />;
+  }
 
     return (
         <>

@@ -5,9 +5,11 @@ import { Container, Row } from 'react-bootstrap';
 import HeaderSwitcher from './HeaderSwitcher';
 import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 import { useEffect, useState } from 'react';
+import LoadingPage from './Loadingpage';
 
 function AboutUs() {
   const [image, setImage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // Initialize Firebase Storage for storing and retrieving images
   const storage = getStorage();
@@ -32,8 +34,13 @@ function AboutUs() {
 
     fetchImage(); // Call the function to fetch the image when the component loads
   }, []);
+  // Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
 
   return (
+    
     <div className='wrapper'>
       {/* HeaderSwitcher to dynamically switch between different headers */}
       <HeaderSwitcher/>

@@ -6,6 +6,7 @@ import SellerHeader from "./SellerHeader";
 import AdminHeader from "./Adminheader";
 import Footer from "./Footer";
 import FBDataService from "../context/FBService";
+import LoadingPage from "./Loadingpage";
 
 const MyListings = () => {
   // Accessing products and deleteProduct function from Product context
@@ -24,6 +25,8 @@ const MyListings = () => {
   
   // State to keep track of the product currently being edited or viewed
   const [currentProduct, setCurrentProduct] = useState(null);
+  const [loading, setLoading] = useState(true); // New state
+
 
   // Fetch and filter products when user or products change
   useEffect(() => {
@@ -75,6 +78,10 @@ const MyListings = () => {
     setCurrentProduct(product);
     setShowDetailsModal(true);
   };
+  // Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
 
   return (
     <div className="main-content" style={{marginTop: -70}}>

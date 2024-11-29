@@ -3,7 +3,7 @@ import { Table, Button, Modal, Form } from "react-bootstrap";
 import { useProductcontext } from "../context/Productcontext";
 import AdminHeader from "./Adminheader";
 import Footer from "./Footer";
-
+import LoadingPage from "./Loadingpage";
 const ManageProducts = () => {
   // Extracting product-related functions and data from context
   const { products, deleteProduct, updateProduct } = useProductcontext();
@@ -11,6 +11,8 @@ const ManageProducts = () => {
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const [currentProduct, setCurrentProduct] = useState(null); // State for the product being edited
   const [categories] = useState(["Electronics", "Fashion", "Books", "Home"]); // Example categories for selection
+  const [loading, setLoading] = useState(true); // New state
+
 
   // Update local state when products from context change
   useEffect(() => {
@@ -39,7 +41,10 @@ const ManageProducts = () => {
     const { name, value } = e.target;
     setCurrentProduct({ ...currentProduct, [name]: value }); // Update the product state with form changes
   };
-
+// Show loading page while data is being fetched
+if (loading) {
+  return <LoadingPage />;
+}
   return (
     <div className="main-content" style={{marginTop: -70}}>
       <AdminHeader /> {/* Display the admin header */}
