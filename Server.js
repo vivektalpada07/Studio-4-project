@@ -16,7 +16,7 @@ app.get('*', (req, res) => {
 });
 
 // Listen on the port provided by Render via process.env.PORT or default to 3000
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5555;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
