@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { db, auth } from '../firebase'; // Ensure Firebase Auth is imported
-import { collection, addDoc } from 'firebase/firestore';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import axios from 'axios';
 import '../css/Header.css';
 import LoadingPage from './Loadingpage';
 import '../css/Addproduct.css';
@@ -15,10 +13,8 @@ function Addproducts() {
   const [category, setCategory] = useState('furniture');
   const [images, setImages] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
-  const [progress, setProgress] = useState(0);
   const [successMessage, setSuccessMessage] = useState('');
-  const [loading, setLoading] = useState(false); // Manage loading state
-  const storage = getStorage();
+  const [loading, setLoading] = useState(false);
 
   const handleImageChange = (e) => {
     if (e.target.files) {
@@ -26,74 +22,50 @@ function Addproducts() {
     }
   };
 
-  const handleImageUpload = () => {
+  const handleImageUpload = async () => {
     if (images.length === 0) {
       alert('Please select images to upload.');
       return;
     }
 
-    setLoading(true); // Set loading state to true during image upload
-
-    const uploadPromises = images.map((image) => {
-      const storageRef = ref(storage, `images/${productName}/${image.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, image);
-
-      return new Promise((resolve, reject) => {
-        uploadTask.on(
-          'state_changed',
-          (snapshot) => {
-            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            setProgress(progress);
-          },
-          (error) => {
-            console.error('Upload failed: ', error);
-            reject(error);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              setImageUrls((prev) => [...prev, downloadURL]);
-              resolve(downloadURL);
-            });
-          }
-        );
-      });
+    const formData = new FormData();
+    images.forEach((image) => {
+      formData.append('images', image);
     });
 
-    Promise.all(uploadPromises)
-      .then(() => {
-        alert('Images uploaded successfully!');
-      })
-      .catch((error) => {
-        console.error('Error uploading images: ', error);
-        alert('Failed to upload images. Please try again.');
-      })
-      .finally(() => {
-        setLoading(false); // Set loading state back to false after upload completes
+    setLoading(true); // Set loading state to true during image upload
+
+    try {
+      const response = await axios.post('http://localhost:8080/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
+
+      setImageUrls(response.data.fileUrls);
+      alert('Images uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading images: ', error);
+      alert('Failed to upload images. Please try again.');
+    } finally {
+      setLoading(false); // Set loading state back to false after upload completes
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       setLoading(true); // Set loading state to true during product submission
 
-      const user = auth.currentUser;
-      if (!user) {
-        throw new Error('User not authenticated');
-      }
-
-      await addDoc(collection(db, 'products'), {
+      const productData = {
         productName,
         productDescription,
         productDetailedDescription,
         productPrice: Number(productPrice),
         category,
         imageUrls,
-        sellerId: user.uid,
-        sellerUsername: user.displayName || user.email.split('@')[0],
-        sellerEmail: user.email,
-      });
+      };
+
+      // Submit product data to your backend (or database)
+      console.log('Product submitted:', productData);
 
       setSuccessMessage('Product added successfully!');
       setProductName('');
@@ -103,13 +75,12 @@ function Addproducts() {
       setCategory('furniture');
       setImages([]);
       setImageUrls([]);
-      setProgress(0);
 
       setTimeout(() => {
         setSuccessMessage('');
       }, 3000);
-    } catch (e) {
-      console.error('Error adding document: ', e);
+    } catch (error) {
+      console.error('Error adding product: ', error);
     } finally {
       setLoading(false); // Set loading state back to false after product submission completes
     }
@@ -175,7 +146,6 @@ function Addproducts() {
           <button type='button' onClick={handleImageUpload}>
             Upload Images
           </button>
-          <progress value={progress} max='100' />
           {imageUrls.length > 0 &&
             imageUrls.map((url, index) => (
               <img
