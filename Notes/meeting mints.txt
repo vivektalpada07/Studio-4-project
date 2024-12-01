@@ -1,10 +1,28 @@
 Studio 4:
 Project - Eco Shop
 Meeting Minutes:
-11-11-2024: 30 Minutes
-17-10-2024: 30 Minutes
-19-10-2024: 15 Minutes
 
+
+
+17-10-2024: 30 Minutes
+We discussed about the project and made the user stories according to the client requirement.
+ 
+25-10-2024: 15 Minutes
+We created our teams group, repositories in Github also created the backlogs in Jira. Assigned the roles and also discussed about sprint.
+
+
+05-11-2024: 30 Minutes 
+Discussed about the progress and about the next sprint 
+
+11-11-2024: 30 Minutes
+Uploaded project on Docker and same the progress about the project.
+
+22-11-2024: 30-45 Min 
+Discussed about the GitHub actions.
+
+28-11-2024: 20 Min
+Worked on the remaining parts and Nikita is responsible for a GitHub action and uploading on cloud surface
+Sia is accountable for the test
 
 command line:
 ssh -i keyss root@95.111.216.14
