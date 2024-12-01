@@ -52,5 +52,5 @@ jobs:
       # Push the Docker image to the registry
       - name: Push Docker image
         run: |
-          docker tag my-react-app:latest your-dockerhub-username/my-react-app:latest
-          docker push your-dockerhub-username/my-react-app:latest
+          docker tag my-react-app:latest ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
