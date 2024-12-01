@@ -10,7 +10,6 @@ const Reviews = () => {
   const [showReviews, setShowReviews] = useState(false); // Show/hide reviews
   const [loading, setLoading] = useState(true); // Loading state for fetching reviews
 
-  // Fetch all reviews when the component is mounted
   useEffect(() => {
     const fetchReviews = async () => {
       if (user && user.role === 'admin') {

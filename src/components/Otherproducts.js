@@ -14,12 +14,14 @@ function OtherProducts() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const [show, setShow] = useState(false);
   const [sortOption, setSortOption] = useState('default');
+  const [loading, setLoading] = useState(true); // Loading state
+
   const { cartItems, addToCart } = useCartContext();
   const { addToWishlist } = useWishlistContext();
   const currentUser = auth.currentUser;
-  const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -35,7 +37,7 @@ function OtherProducts() {
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
-        setLoading(false); // Stop loading once data is fetched
+        setLoading(false); // Stop loading after fetching data
       }
     };
 
@@ -43,14 +45,13 @@ function OtherProducts() {
   }, []);
 
   useEffect(() => {
-    // Sort products based on the selected sort option
     const sortProducts = (products) => {
       if (sortOption === 'priceLowToHigh') {
         return [...products].sort((a, b) => a.productPrice - b.productPrice);
       } else if (sortOption === 'priceHighToLow') {
         return [...products].sort((a, b) => b.productPrice - a.productPrice);
       }
-      return products; // Default sorting (no change)
+      return products;
     };
 
     setFilteredProducts(sortProducts(products));
@@ -84,13 +85,7 @@ function OtherProducts() {
       return;
     }
 
-    const isAlreadyInCart = cartItems.some((item) => item.productId === product.productId);
-
-    if (isAlreadyInCart) {
-      alert('This product is already in your cart.');
-    } else {
-      addToCart({ ...product });
-    }
+    addToCart({ ...product });
   };
 
   const handleAddToWishlist = () => {
@@ -102,8 +97,6 @@ function OtherProducts() {
     if (selectedProduct) {
       addToWishlist({ ...selectedProduct });
       handleClose();
-    } else {
-      console.error('No product selected or product data is incomplete.');
     }
   };
 
@@ -164,26 +157,16 @@ function OtherProducts() {
                 <div className="card text-center">
                   <div className="card-body">
                     {product.imageUrls && product.imageUrls[0] && (
-                      <img
-                        src={product.imageUrls[0]}
-                        alt={product.productName}
-                        style={{ width: '100%', height: 'auto' }}
-                      />
+                      <img src={product.imageUrls[0]} alt={product.productName} style={{ width: '100%', height: 'auto' }} />
                     )}
                     <h5 className="card-title">{product.productName}</h5>
-                    <p className="card-text">
-                      <strong>Price: ${product.productPrice}</strong>
-                    </p>
+                    <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
                     <p className="card-text">{product.productDescription}</p>
                     <p className="card-text">Seller Username: {product.sellerUsername || 'Unknown'}</p>
                     <button className="btn add-to-cart mb-2" onClick={() => handleAddToCart(product)}>
                       Add to Cart
                     </button>
-                    <button
-                      className="btn view-details"
-                      style={{ backgroundColor: '#ff8c00' }}
-                      onClick={() => handleShow(product)}
-                    >
+                    <button className="btn view-details" style={{ backgroundColor: '#ff8c00' }} onClick={() => handleShow(product)}>
                       View Details
                     </button>
                   </div>
@@ -245,11 +228,7 @@ function OtherProducts() {
                   <div className="col-4" key={index}>
                     <div className="card text-center">
                       {product.imageUrls && product.imageUrls[0] && (
-                        <img
-                          src={product.imageUrls[0]}
-                          alt={product.productName}
-                          style={{ width: '100%', height: 'auto' }}
-                        />
+                        <img src={product.imageUrls[0]} alt={product.productName} style={{ width: '100%', height: 'auto' }} />
                       )}
                       <div className="card-body">
                         <h6>{product.productName}</h6>
