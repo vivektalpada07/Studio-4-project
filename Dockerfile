@@ -1,5 +1,5 @@
 # Use Node.js 18 alpine version as the base image
-FROM node:18-alpine AS build
+FROM node:18-alpine
 
 # Set working directory
 WORKDIR /app
@@ -14,22 +14,8 @@ COPY . .
 # Set the NODE_OPTIONS to use OpenSSL legacy provider
 ENV NODE_OPTIONS=--openssl-legacy-provider
 
-# Build the React app
-RUN npm run build
-
-# Stage 2: Serve the React app with Nginx
-FROM nginx:alpine
-
-# Copy the custom Nginx configuration
-COPY default.conf /etc/nginx/conf.d/default.conf
-
-# Copy the build files from the previous stage to Nginx's web directory
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose port 80 to serve the app
+# Expose the port your server listens on
 EXPOSE 5555
 
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
-
+# Start the Node.js server
 CMD ["node", "server.js"]
