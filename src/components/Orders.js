@@ -16,24 +16,28 @@ const Orders = () => {
   const [loading, setLoading] = useState(true); // Loading state
 
   useEffect(() => {
-    if (user && user.uid) {
-      const filteredOrders = orders
-        .filter((order) => order.status !== "complete") // Exclude completed orders
-        .map((order) => ({
-          ...order,
-          items: order.items
-            ? order.items.filter((item) => item.sellerId === user.uid)
-            : [],
-        }))
-        .filter((order) => order.items.length > 0);
+    const processOrders = () => {
+      if (user && user.uid) {
+        const filteredOrders = orders
+          .filter((order) => order.status !== "complete") // Exclude completed orders
+          .map((order) => ({
+            ...order,
+            items: order.items
+              ? order.items.filter((item) => item.sellerId === user.uid)
+              : [],
+          }))
+          .filter((order) => order.items.length > 0);
 
-      setSellerOrders(filteredOrders);
-      setLoading(false); // Stop loading once data is processed
-    }
+        setSellerOrders(filteredOrders);
+      }
+      setLoading(false); // Stop loading after processing orders
+    };
+
+    processOrders();
   }, [orders, user]);
 
   const handleStatusChange = (orderId, status) => {
-    updateOrderStatus(orderId, status); // Implement this function in your Productcontext
+    updateOrderStatus(orderId, status); // Update the order status
   };
 
   const handleProductClick = async (product) => {
@@ -114,7 +118,9 @@ const Orders = () => {
                     <td>
                       <select
                         value={order.status}
-                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                        onChange={(e) =>
+                          handleStatusChange(order.id, e.target.value)
+                        }
                       >
                         <option value="not done">Not Done</option>
                         <option value="in progress">In Progress</option>
