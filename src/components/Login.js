@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
@@ -8,36 +8,15 @@ import Header from "./Header";
 import Footer from "./Footer";
 import FBDataService from "../context/FBService"; // Service to fetch user data from Firebase
 import "../css/Login.css"; // Custom CSS for login page
-import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import LoadingPage from "./Loadingpage";
 
 const Login = () => {
   const [email, setEmail] = useState(""); // State for email input
   const [password, setPassword] = useState(""); // State for password input
   const [error, setError] = useState(""); // State for error messages
-  const [image, setImage] = useState(""); // State for storing the login image URL
   const { logIn, googleSignIn } = useUserAuth(); // Destructure login functions from context
   const navigate = useNavigate(); // Hook for navigation
-  const [loading, setLoading] = useState(true); // State for loading status
-
-  // Initialize Firebase Storage to get images
-  const storage = getStorage();
-
-  useEffect(() => {
-    // Function to fetch the login image from Firebase Storage
-    const fetchImage = async () => {
-      try {
-        const imageRef = ref(storage, "images/login.png"); // Reference to login image
-        const url = await getDownloadURL(imageRef); // Fetch the image URL
-        setImage(url); // Set the image URL for rendering
-      } catch (error) {
-        console.error("Error fetching image:", error); // Log any error
-      } finally {
-        setLoading(false); // Stop loading after image fetch
-      }
-    };
-    fetchImage(); // Call the fetch function
-  }, [storage]);
+  const [loading, setLoading] = useState(false); // State for loading status
 
   // Handle role-based navigation after login
   const handleRoleBasedRedirect = async (uid) => {
@@ -97,14 +76,6 @@ const Login = () => {
       <div className="main-content" style={{ marginTop: -70 }}>
         <h2>Login</h2> {/* Page Title */}
         <div className="login-container">
-          <div className="image-section">
-            {/* Display fetched image or fallback message */}
-            {image ? (
-              <img src={image} alt="Login" className="login-image" />
-            ) : (
-              <p>Loading Image...</p>
-            )}
-          </div>
           <div className="form-section">
             <div className="p-4 box">
               {error && <Alert variant="danger">{error}</Alert>} {/* Error Message */}
