@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "3090:3090"
     environment:
       - DB_HOST=mysql
       - DB_USER=root
@@ -63,3 +63,23 @@ volumes:
 networks:
   default:
     driver: overlay
+
+name: Deploy to UpCloud
+on:
+ push:
+   branches:
+     - main
+jobs:
+ deploy:
+   runs-on: ubuntu-latest
+   steps:
+     - name: Checkout code
+       uses: actions/checkout@v2
+     - name: Install sshpass
+       run: sudo apt-get install -y sshpass
+     - name: Sync files to UpCloud
+       env:
+         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+       run: |
+         # Disable strict host key checking
+         sshpass -p "$SSH_PASSWORD" rsync -avz --delete --exclude='node_modules' --include='test/example.test.js' -e "ssh -o StrictHostKeyChecking=no" ./ vivek@95.111.219.120:~/Studio-4-project
