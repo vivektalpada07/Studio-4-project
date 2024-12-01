@@ -31,4 +31,5 @@ EXPOSE 5555
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
-CMD ["npm", "start"]
+
+CMD ["node", "server.js"]
