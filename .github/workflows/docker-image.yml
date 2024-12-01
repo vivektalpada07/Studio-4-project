@@ -33,6 +33,13 @@ jobs:
       # Build the Docker image
       - name: Build Docker image
         run: |
+          # Clean npm cache to avoid stale dependencies
+          npm cache clean --force
+          
+          # Explicitly install the latest version of react-image-magnify to avoid issues
+          npm install react-image-magnify@latest
+
+          # Build the Docker image
           docker build --file Dockerfile --tag my-react-app:latest .
 
       # Log in to Docker Hub (or other Docker registry) to push the image
