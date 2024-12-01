@@ -17,6 +17,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Harmless GitHub automation testing step
+      - name: Test GitHub Actions
+        run: echo "Hello, GitHub Actions! Workflow is running successfully."
+
       # Set up Docker Buildx (to build multi-platform images if needed)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
