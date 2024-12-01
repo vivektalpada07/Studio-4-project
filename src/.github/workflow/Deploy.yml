@@ -82,4 +82,4 @@ jobs:
          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
        run: |
          # Disable strict host key checking
-         sshpass -p "$SSH_PASSWORD" rsync -avz --delete --exclude='node_modules' --include='test/example.test.js' -e "ssh -o StrictHostKeyChecking=no" ./ vivek@95.111.219.120:~/Studio-4-project
+         sshpass -p "Vivek1819" rsync -avz --delete --exclude='node_modules' --include='test/example.test.js' -e "ssh -o StrictHostKeyChecking=no" ./ vivek@95.111.219.120:~/Studio-4-project
