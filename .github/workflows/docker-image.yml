@@ -58,3 +58,20 @@ jobs:
         run: |
           docker tag my-react-app:latest ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
+
+           # Deploy Dockerized application to remote server
+      - name: Deploy to Remote Server
+        env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh \
+            -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+            # Pull the latest Docker image
+            docker pull ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
+            # Stop any running container
+            docker stop my-react-app || true
+            # Remove the old container
+            docker rm my-react-app || true
+            # Start a new container with the updated image
+            docker run -d --name my-react-app -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
+EOF
