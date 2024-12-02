@@ -1,5 +1,5 @@
 name: Build and Deploy Docker Image
-
+ 
 on:
   push:
     branches:
@@ -7,24 +7,24 @@ on:
   pull_request:
     branches:
       - main  # Trigger the action on pull requests to the main branch
-
+ 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
-
+ 
     steps:
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
-
+ 
       # Harmless GitHub automation testing step
       - name: Test GitHub Actions
         run: echo "Hello, GitHub Actions! Workflow is running successfully."
-
+ 
       # Set up Docker Buildx (to build multi-platform images if needed)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-
+ 
       # Cache Docker layers to speed up the build process
       - name: Cache Docker layers
         uses: actions/cache@v3
@@ -33,39 +33,41 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-
+ 
       # Build the Docker image
       - name: Build Docker image
         run: |
           # Clean npm cache to avoid stale dependencies
           npm cache clean --force
-          
           # Install dependencies with --legacy-peer-deps to avoid peer dependency conflicts
           npm install --legacy-peer-deps
-
+ 
           # Build the Docker image
           docker build --file Dockerfile --tag my-react-app:latest .
-
+ 
       # Log in to Docker Hub (or other Docker registry) to push the image
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
+ 
       # Push the Docker image to the registry
       - name: Push Docker image
         run: |
           docker tag my-react-app:latest ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
-
-           # Deploy Dockerized application to remote server
+ 
+      # Install sshpass for deployment
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
+ 
+      # Deploy Dockerized application to remote server
       - name: Deploy to Remote Server
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
         run: |
-          sshpass -p "$SSH_PASSWORD" ssh \
-            -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} << EOF
             # Pull the latest Docker image
             docker pull ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
             # Stop any running container
@@ -74,3 +76,4 @@ jobs:
             docker rm my-react-app || true
             # Start a new container with the updated image
             docker run -d --name my-react-app -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/my-react-app:latest
+          EOF
