@@ -82,5 +82,5 @@ jobs:
             docker rm my-react-app || true
 
             # Run the container
-            docker run -d --name my-react-app -p 80:80 $DOCKER_USERNAME/my-react-app:latest
+            docker run -d --name my-react-app -p 5555:5555 $DOCKER_USERNAME/my-react-app:latest
           EOF
