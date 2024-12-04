@@ -61,3 +61,26 @@ jobs:
       # Install sshpass for deployment
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
+ 
+      # SSH into the server and pull the Docker image
+      - name: Deploy Docker container on server
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << EOF
+            # Log in to Docker registry
+            echo "$SSH_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+            # Pull the latest Docker image
+            docker pull $DOCKER_USERNAME/my-react-app:latest
+
+            # Stop and remove any existing container
+            docker stop my-react-app || true
+            docker rm my-react-app || true
+
+            # Run the container
+            docker run -d --name my-react-app -p 80:80 $DOCKER_USERNAME/my-react-app:latest
+          EOF
