@@ -7,7 +7,7 @@ import Footer from "./Footer";
 import LoadingPage from "./Loadingpage";
 
 const SellerQueries = () => {
-  const [queries, setQueries] = useState([]);
+  const [queries, setQueries] = useState([]); // State to store seller queries
   const [loading, setLoading] = useState(true); // State to track loading
 
   // Fetch seller queries from Firestore
@@ -15,7 +15,7 @@ const SellerQueries = () => {
     const fetchQueries = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "sellerQueries"));
-        const queriesArray = querySnapshot.docs.map(doc => ({
+        const queriesArray = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
@@ -102,16 +102,10 @@ const SellerQueries = () => {
                   )}
                 </td>
                 <td>
-                  <Button
-                    variant="success"
-                    onClick={() => handleApprove(query)}
-                  >
+                  <Button variant="success" onClick={() => handleApprove(query)}>
                     Approve
                   </Button>{" "}
-                  <Button
-                    variant="danger"
-                    onClick={() => handleDecline(query.id)}
-                  >
+                  <Button variant="danger" onClick={() => handleDecline(query.id)}>
                     Decline
                   </Button>
                 </td>

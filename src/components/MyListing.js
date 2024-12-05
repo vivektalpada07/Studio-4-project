@@ -18,13 +18,17 @@ const MyListings = () => {
   const [loading, setLoading] = useState(true); // Loading state for data fetching
 
   useEffect(() => {
-    if (user && products.length > 0) {
-      const filteredProducts = products.filter(
-        (product) => product.sellerId === user.uid
-      );
-      setSellerProducts(filteredProducts);
+    const fetchSellerProducts = async () => {
+      if (user && products.length > 0) {
+        const filteredProducts = products.filter(
+          (product) => product.sellerId === user.uid
+        );
+        setSellerProducts(filteredProducts);
+      }
       setLoading(false); // Stop loading once products are filtered
-    }
+    };
+
+    fetchSellerProducts();
   }, [products, user]);
 
   const handleEditClick = (product) => {
@@ -35,7 +39,9 @@ const MyListings = () => {
   const handleDeleteClick = async (productId) => {
     try {
       await deleteProduct(productId); // Delete product using context function
-      setSellerProducts(sellerProducts.filter((product) => product.id !== productId));
+      setSellerProducts((prev) =>
+        prev.filter((product) => product.id !== productId)
+      );
     } catch (err) {
       console.error("Error deleting product:", err);
     }
@@ -44,8 +50,8 @@ const MyListings = () => {
   const handleSaveChanges = async () => {
     try {
       await FBDataService.updateData(currentProduct.id, currentProduct); // Update product in database
-      setSellerProducts(
-        sellerProducts.map((product) =>
+      setSellerProducts((prev) =>
+        prev.map((product) =>
           product.id === currentProduct.id ? currentProduct : product
         )
       );
@@ -57,7 +63,7 @@ const MyListings = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCurrentProduct({ ...currentProduct, [name]: value });
+    setCurrentProduct((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleProductDetailsClick = (product) => {
@@ -217,6 +223,7 @@ const MyListings = () => {
           )}
         </Modal.Body>
       </Modal>
+      <Footer />
     </div>
   );
 };
