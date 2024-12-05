@@ -65,10 +65,10 @@ jobs:
             set -e
 
             echo "Updating the server..."
-            sudo apt update
+            echo "$SSH_PASSWORD" | sudo -S apt update
 
             echo "Installing Docker if not present..."
-            sudo apt install -y docker.io || true
+            echo "$SSH_PASSWORD" | sudo -S apt install -y docker.io || true
 
             echo "Logging into Docker Hub..."
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
