@@ -10,7 +10,7 @@ import '../css/Header.css';
 import LoadingPage from './Loadingpage';
 
 function CustomerHeader() {
-  // Extract logOut function from the user authentication context
+  // Extract logOut function from the user authentication 
   const { logOut } = useUserAuth();
   // Hook to programmatically navigate to different routes
   const navigate = useNavigate();

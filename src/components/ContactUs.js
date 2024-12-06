@@ -21,7 +21,7 @@ function ContactUs() {
 
     // Check if all fields are filled
     if (name === "" || email === "" || subject === "" || message === "") {
-      setFeedback({ error: true, msg: "Please fill out all fields!" });
+      setFeedback({ error: true, msg: "Please fill out all fields!!!!!" });
       return;
     }
 
@@ -36,7 +36,7 @@ function ContactUs() {
     try {
       // Send contact data to the server
       await Contactusservice.addContact(contactData);
-      setFeedback({ error: false, msg: "Your message has been sent successfully!" });
+      setFeedback({ error: false, msg: "Your message has been sent successfully!!!" });
     } catch (err) {
       console.error("Error sending message:", err); // Log error for debugging
       setFeedback({ error: true, msg: "Failed to send message. Please try again later." });
