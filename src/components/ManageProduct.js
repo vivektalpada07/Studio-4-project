@@ -10,9 +10,9 @@ const ManageProducts = () => {
   const { products, deleteProduct, updateProduct } = useProductcontext();
   const [productList, setProductList] = useState([]); // State to store products for display
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
-  const [currentProduct, setCurrentProduct] = useState(null); // State for the product being edited
-  const [categories] = useState(["Electronics", "Fashion", "Books", "Home"]); // Example categories for selection
-  const [loading, setLoading] = useState(true); // State to manage loading
+  const [currentProduct, setCurrentProduct] = useState(null);
+  const [categories] = useState(["Electronics", "Fashion", "Books", "Home"]); 
+  const [loading, setLoading] = useState(true); 
 
   // Update local state when products from context change
   useEffect(() => {
