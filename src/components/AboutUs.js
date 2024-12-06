@@ -1,3 +1,4 @@
+//about us page for the website in which it includes short descerption of website .........
 import React from 'react';
 import Footer from './Footer';
 import '../css/AboutUs.css';

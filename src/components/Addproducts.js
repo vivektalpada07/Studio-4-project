@@ -1,3 +1,4 @@
+//this is for the supplier can add product and thier functions........
 import React, { useState } from 'react';
 import { db, auth } from '../firebase'; // Ensure Firebase Auth is imported
 import { collection, addDoc } from 'firebase/firestore';
