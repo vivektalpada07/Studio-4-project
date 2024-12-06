@@ -15,6 +15,8 @@ export function CartContextProvider({ children }) {
     const fetchCartItems = async () => {
       if (!currentUser) return;
 
+
+      
       try {
         const docRef = doc(db, "cart", currentUser.uid);
         const docSnap = await getDoc(docRef);

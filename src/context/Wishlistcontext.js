@@ -14,6 +14,8 @@ export function WishlistContextProvider({ children }) {
     const fetchWishlist = async () => {
       if (!currentUser) return;
 
+      
+
       try {
         const docRef = doc(db, "wishlist", currentUser.uid);
         const docSnap = await getDoc(docRef);

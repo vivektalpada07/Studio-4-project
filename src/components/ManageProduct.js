@@ -137,6 +137,7 @@ const ManageProducts = () => {
                   onChange={handleChange} // Update product category on change
                 >
                   
+                  
                   {categories.map((category, index) => (
                     <option key={index} value={category}>
                       {category}

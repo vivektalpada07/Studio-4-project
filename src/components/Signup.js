@@ -18,6 +18,8 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(true); // New state for loading
 
+
+  
   const [role] = useState("customer"); // Role is set to 'customer' by default
 
   const { signUp } = useUserAuth();
