@@ -17,6 +17,9 @@ class FBDataService {
     return updateDoc(docRef, newData);
   };
   
+
+
+  
   deleteData = (id) => {
     const docRef = doc(db, collectionName, id);
     return deleteDoc(docRef);

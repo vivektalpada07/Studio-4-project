@@ -11,6 +11,9 @@ import {
 const collectionName = "checkout";
 const checkoutCollectionRef = collection(db, collectionName);
 
+
+
+
 class CheckoutService {
   addCheckout = async (newCheckout, userId) => {
     try {
