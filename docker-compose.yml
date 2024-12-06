@@ -29,7 +29,7 @@ services:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: mysql
-      MYSQL_ROOT_PASSWORD: yourpassword  # Same as MYSQL root password
+      MYSQL_ROOT_PASSWORD: yourpassword  
     ports:
       - "8080:80"
     depends_on:
