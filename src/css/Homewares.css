@@ -26,7 +26,7 @@ h2 {
 .search-bar {
     flex: 1; 
 }
-
+  
 .search-bar input {
     border-radius: 20px;
     border: 2px solid #ddd;
