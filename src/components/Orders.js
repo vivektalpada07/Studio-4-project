@@ -19,7 +19,7 @@ const Orders = () => {
     const processOrders = () => {
       if (user && user.uid) {
         const filteredOrders = orders
-          .filter((order) => order.status !== "complete") // Exclude completed orders
+          .filter((order) => order.status !== "complete..") 
           .map((order) => ({
             ...order,
             items: order.items
@@ -30,7 +30,7 @@ const Orders = () => {
 
         setSellerOrders(filteredOrders);
       }
-      setLoading(false); // Stop loading after processing orders
+      setLoading(false); 
     };
 
     processOrders();

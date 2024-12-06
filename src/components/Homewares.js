@@ -35,7 +35,7 @@ function Homewares() {
           ...doc.data()
         }));
         setProducts(productsArray);
-        setFilteredProducts(productsArray);  // Initially display all products
+        setFilteredProducts(productsArray);  // Initially display all products........
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -81,14 +81,14 @@ function Homewares() {
 
   const handleAddToCart = (product) => {
     if (!currentUser) {
-      alert("Please log in to add items to the cart.");
+      alert("Please log in to add items to the cart.........");
       return;
     }
 
     const isAlreadyInCart = cartItems.some(item => item.productId === product.productId);
 
     if (isAlreadyInCart) {
-      alert("This product is already in your cart.");
+      alert("This product is already in your cart.....");
     } else {
       addToCart({ ...product });
     }
@@ -96,7 +96,7 @@ function Homewares() {
 
   const handleAddToWishlist = () => {
     if (!currentUser) {
-      alert("Please log in to add items to your wishlist.");
+      alert("Please log in to add items to your wishlist......");
       return;
     }
 
