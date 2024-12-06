@@ -6,8 +6,8 @@ import GoogleButton from "react-google-button";
 import { useUserAuth } from "../context/UserAuthContext";
 import Header from "./Header";
 import Footer from "./Footer";
-import FBDataService from "../context/FBService"; // Service to fetch user data from Firebase
-import "../css/Login.css"; // Custom CSS for login page
+import FBDataService from "../context/FBService"; 
+import "../css/Login.css"; 
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 import LoadingPage from "./Loadingpage";
 
@@ -36,9 +36,9 @@ const Login = () => {
         setLoading(false); // Stop loading after image fetch
       }
     };
-    fetchImage(); // Call the fetch function
+    fetchImage(); // 
   }, [storage]);
-
+// Handle function of login like after login what page will dispaly for different users ......
   // Handle role-based navigation after login
   const handleRoleBasedRedirect = async (uid) => {
     try {
@@ -53,7 +53,7 @@ const Login = () => {
         } else if (userRole === "customer") {
           navigate("/customer");
         } else {
-          setError("Role not recognized."); // Handle unknown roles
+          setError("Role not recognized."); 
         }
       } else {
         setError("User data not found."); // Handle missing user data

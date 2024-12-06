@@ -1,3 +1,4 @@
+// this page is for the supplier wherre supplier can manage thir lsitingof product in which they can delete and update the products.
 import React, { useEffect, useState } from "react";
 import { Table, Button, Modal, Form } from "react-bootstrap";
 import { useProductcontext } from "../context/Productcontext";

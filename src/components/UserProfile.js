@@ -7,7 +7,7 @@ import LoadingPage from "./Loadingpage";
 const UserProfile = () => {
   const { user } = useUserAuth();
   const [userProfile, setUserProfile] = useState(null);
-  const [loading, setLoading] = useState(true); // State for loading
+  const [loading, setLoading] = useState(true); 
   const [showModal, setShowModal] = useState(false);
   const [updatedProfile, setUpdatedProfile] = useState({});
   const [error, setError] = useState("");
