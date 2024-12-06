@@ -37,7 +37,7 @@ function OtherProducts() {
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
-        setLoading(false); // Stop loading after fetching data
+        setLoading(false); 
       }
     };
 
@@ -114,7 +114,7 @@ function OtherProducts() {
     }
   };
 
-  // Show loading page while data is being fetched
+
   if (loading) {
     return <LoadingPage />;
   }
