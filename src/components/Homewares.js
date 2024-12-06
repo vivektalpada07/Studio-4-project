@@ -11,6 +11,7 @@ import '../css/Homewares.css';  // Add your CSS file here
 import HeaderSwitcher from './HeaderSwitcher';
 import LoadingPage from './Loadingpage';
 
+
 function Homewares() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -18,11 +19,11 @@ function Homewares() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
-  const [sortOrder, setSortOrder] = useState('asc'); // New state for sorting
+  const [sortOrder, setSortOrder] = useState('asc'); // New state for sorting........
   const { cartItems, addToCart } = useCartContext();  
   const { addToWishlist } = useWishlistContext();  
   const currentUser = auth.currentUser;
-  const [loading, setLoading] = useState(true); // New state
+  const [loading, setLoading] = useState(true); // New state......
 
   useEffect(() => {
     const fetchProducts = async () => {

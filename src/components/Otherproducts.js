@@ -17,7 +17,7 @@ function OtherProducts() {
   const [searchTerm, setSearchTerm] = useState('');
   const [show, setShow] = useState(false);
   const [sortOption, setSortOption] = useState('default');
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); 
 
   const { cartItems, addToCart } = useCartContext();
   const { addToWishlist } = useWishlistContext();

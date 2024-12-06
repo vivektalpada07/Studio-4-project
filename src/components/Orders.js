@@ -13,7 +13,7 @@ const Orders = () => {
   const [sellerOrders, setSellerOrders] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const processOrders = () => {
