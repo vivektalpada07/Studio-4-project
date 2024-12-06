@@ -16,7 +16,7 @@ const MyListings = () => {
   const [showEditModal, setShowEditModal] = useState(false); // Edit modal visibility
   const [showDetailsModal, setShowDetailsModal] = useState(false); // Details modal visibility
   const [currentProduct, setCurrentProduct] = useState(null); // Current product being edited/viewed
-  const [loading, setLoading] = useState(true); // Loading state for data fetching
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchSellerProducts = async () => {

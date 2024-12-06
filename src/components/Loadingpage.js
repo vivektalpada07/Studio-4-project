@@ -5,11 +5,11 @@ const LoadingPage = ({ onTimeout }) => {
   const [visible, setVisible] = useState(true); // State to control visibility
 
   useEffect(() => {
-    // Set a timer to hide the loading screen
+  
     const timer = setTimeout(() => {
       setVisible(false);
       if (onTimeout) onTimeout(); // Trigger callback after timeout, if provided
-    }, 10000); // 10000ms = 10 seconds
+    }, 10000);
 
     // Clear the timer on component unmount
     return () => clearTimeout(timer);

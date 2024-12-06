@@ -19,18 +19,18 @@ const ManageProducts = () => {
     if (products.length > 0) {
       setProductList(products);
     }
-    setLoading(false); // Set loading to false once data is fetched
+    setLoading(false); 
   }, [products]);
 
   // Function to handle product deletion
   const handleDelete = (productId) => {
-    deleteProduct(productId); // Call delete function from context
+    deleteProduct(productId); 
     setProductList(productList.filter((product) => product.id !== productId));
   };
 
   // Function to handle editing a product
   const handleEdit = (product) => {
-    setCurrentProduct(product); // Set the product to be edited
+    setCurrentProduct(product);
     setShowModal(true); // Show the modal for editing
   };
 
@@ -136,7 +136,7 @@ const ManageProducts = () => {
                   value={currentProduct.category}
                   onChange={handleChange} // Update product category on change
                 >
-                  {/* Render category options */}
+                  
                   {categories.map((category, index) => (
                     <option key={index} value={category}>
                       {category}
@@ -156,7 +156,7 @@ const ManageProducts = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Footer /> {/* Display the footer */}
+      <Footer />
     </div>
   );
 };
