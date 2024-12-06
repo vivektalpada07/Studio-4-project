@@ -1,3 +1,4 @@
+//this is for supplier pAGE AND THE SUPPPLIER DASHBOARD
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { collection, addDoc } from "firebase/firestore";

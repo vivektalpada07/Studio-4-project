@@ -39,7 +39,7 @@ function Cart() {
         : [...prevSelected, productId]
     );
   };
-
+// HANDLE FOR CHECKOUT PROCEEDER
   const handleCheckout = () => {
     if (!currentUser) {
       alert("You need to log in to proceed to checkout.");

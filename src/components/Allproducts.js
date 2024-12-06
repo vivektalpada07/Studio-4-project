@@ -1,3 +1,4 @@
+// dispaly the product to the user interface 
 import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
